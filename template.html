@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE html>
+<html>
+    <style>
+        p.intro {
+            
+        }
+
+        h2.article_name{
+            font-size: 1.7em;
+        }
+
+        h3.abstract_section{
+            font-size: 1.2em;
+        }
+
+        div.article_box{
+
+        }
+    </style>
+
+    <body>
+        <h1>Your Monthly report is here!</h1>
+        <p class="intro">Hi, {{name}}! Here are some new papers for you that
+            were published on PubMed last month. Today I have 
+            {{num}} articles for you. Hope you find them interesting!</p>
+        <br>
+        {% for article in formated_articles %}
+            <div class="article_box">
+                <h2 class="article_name">{{article['index']}}. {{article['title']}}</h2>
+                {% for p in article['abstract'] %}
+                    <h3 class="abstract_section">{{p[0]}}</h3>
+                    <p>{{p[1]}}</p>
+                {% endfor %}
+                <a href="{{article['link']}}">Article on PubMed</a><br>
+                <span>DOI: {{article['doi']}}</span><br>
+                <span>{{article['date']}}</span>
+            </div>
+            <br><br><br>
+        {% endfor %}
+    </body>
+</html>
