@@ -33,6 +33,32 @@
                     <h3 class="abstract_section">{{p[0]}}</h3>
                     <p>{{p[1]}}</p>
                 {% endfor %}
+                <br>
+                <h2>Authors</h2>
+<!--                <ol>-->
+<!--                    {% for auth in article['auth_list'] %}-->
+<!--                    <li>-->
+<!--                        <span><b>{{auth.fullname}}</b></span>-->
+<!--                        <br>-->
+<!--                        <span><i>{{auth.affiliation}}</i></span>-->
+<!--                        <br><br>-->
+<!--                    </li>-->
+<!--                    {% endfor %}-->
+<!--                </ol>-->
+                <ul>
+                   {% for el in article['auth_per_af'] %}
+                        <li>
+                            <span><b>{{', '.join(el[1])}}<b></b></span>
+                            <br>
+                            <span><i>{{el[0]}}</i></span>
+                        </li>
+                    {% endfor %}
+                    {% if article['et_al'] %}
+                        <li>
+                            <span><b>Et al</b></span>
+                        </li>
+                    {% endif %}
+                </ul>
                 <a href="{{article['link']}}">Article on PubMed</a><br>
                 <span>DOI: {{article['doi']}}</span><br>
                 <span>{{article['date']}}</span>

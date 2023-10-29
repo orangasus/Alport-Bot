@@ -1,9 +1,17 @@
+#TODO:
+# Try to make it async wherever possible
+# Change email address
+# Email Susie: mentioning org. name, list of emails, excel sheet?
+# Upload to server until the 31st
+# Upload to Git
+
+
 from pprint import pprint
 
 # Module for working with date
 import datetime
 
-# Modules for enviroment variables
+# Modules for environment variables
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -15,13 +23,16 @@ from oauth2client.service_account import ServiceAccountCredentials
 # Module for working with data
 import pandas as pd
 
+from tqdm import tqdm
+
 # My modules
 import MailHandler
 import PubMedHandler
 
+
 # Setting up google API client
 scope = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
-credentials = ServiceAccountCredentials.from_json_keyfile_name('gs_credentials.json', scope)
+credentials = ServiceAccountCredentials.from_json_keyfile_name('google_cred.json', scope)
 google_client = gspread.authorize(credentials)
 
 # Connecting to Google sheets db
@@ -37,11 +48,12 @@ def get_formated_current_date():
 
 
 def get_user_info_from_row(row):
-    name = 'Stranger' if row['name'] == None else row['name']
+    name = 'Subscriber' if row['name'] == None else row['name']
     email = row['email']
     key_words = [x.lower() for x in row['keywords_list'].split(", ")]
     query = row['query']
-    return {'name': name, 'email': email, 'key_words': key_words, 'query': query}
+    auth_limit = row['authors_limit']
+    return {'name': name, 'email': email, 'key_words': key_words, 'query': query, 'auth_limit': auth_limit}
 
 
 def is_end_of_month():
@@ -52,7 +64,7 @@ def is_end_of_month():
 
 
 if __name__ == '__main__':
-    if is_end_of_month():
+    if True:
         # gets current date
         now = get_formated_current_date()
 
@@ -70,7 +82,7 @@ if __name__ == '__main__':
 
         # Reads db google sheet
         df = pd.DataFrame(sheet1.get_all_records())
-        for _, row in df.iterrows():
+        for _, row in tqdm(df.iterrows()):
             user_data = get_user_info_from_row(row)
 
             # fetches articles
@@ -88,7 +100,9 @@ if __name__ == '__main__':
                 if i < n - 1:
                     month_before = PubMedHandler.get_formated_pubdate(articles_sum[i + 1])[1]
 
-                d = PubMedHandler.format_article(articles_sum[i], paper, id_list[i], index=index)
+                d = PubMedHandler.format_article(articles_sum[i], paper, id_list[i], index, user_data['auth_limit'])
+                # print(d['auth_list'][0])
+                # print('--------------------------')
 
                 paper_day, paper_month, paper_year = PubMedHandler.get_formated_pubdate(articles_sum[i])
 

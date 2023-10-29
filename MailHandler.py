@@ -2,6 +2,8 @@ import ssl
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from pprint import pprint
+
 from jinja2 import Template
 
 
@@ -39,7 +41,6 @@ def send_report(formated_articles, name, email, email_sender, email_password):
 
     content_text = create_plain_text_email_content(formated_articles, name)
     content_html = create_html_email_content(formated_articles, name)
-    # create_html_email_content(formated_articles)
 
     plain_version = MIMEText(content_text, 'plain')
     html_version = MIMEText(content_html, 'html')
