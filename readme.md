@@ -46,3 +46,4 @@ And here is what the report looks like
 - A very little of __Pandas__ for retrieving data from Google Sheets
 - __Google Drive and Google Sheets APIs__ for working with Google Sheets
 - __SSL, SMTP and email Python modules__ for sending emails
+- __Beautiful Soup 4__ for scraping article's authors
