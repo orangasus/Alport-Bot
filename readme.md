@@ -5,7 +5,7 @@ Alport bot is a script that parses [PubMed](https://pubmed.ncbi.nlm.nih.gov/) fo
 
  _PubMed is a free resource supporting the search and retrieval of biomedical and life sciences literature with the aim of improving health–both globally and personally_ - from official website.<br><br>
 
-## How does this work?
+## How does it work?
 - Step 1 <br> Bot gets user query and keywords from a Google sheet that has 4 fields: email adress, user's name, list of keywords and search query
 
 - Step 2 <br> It searches PubMed DB using these query and keywords with Entrez API tools
@@ -17,10 +17,10 @@ Alport bot is a script that parses [PubMed](https://pubmed.ncbi.nlm.nih.gov/) fo
 ## About searching in PubMed DB
 Just hear me out. Despite Entrez API being rather easy to use, it has a significant flaw - it's not entirely accurate. That's why after the bot receives articles from a search in PubMed DB (it needs the query paremeter for this) it checks if any of given keywords are presented in article keywords. This way Alport Bot can minimize chances of sending unrelated articles to the user, though it unfortunately can happen.<br><br>
 
-## Who can use this?
+## Who can use it?
 This program can be a lot of help to researchers and scientist in field of medicine and biology. It allows users to stay on top of things when it comes to a specific topic without wasting time on searching for new articles.<br><br>
 
-## Exmaple
+## Example
 Here is an example of data storage
 
 ![How the Google sheet looks](Images/db.png)<br><br>
